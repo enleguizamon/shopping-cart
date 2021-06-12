@@ -31,24 +31,44 @@ class Products extends React.Component {
     total: 0,
   };
 
+  //funcion para actualizar los subtotales y el total de productos. Se reutiliza en componentDidMount() y en componentDidUpdate()
   updateProducts() {
     const { counters } = this.props;
     const { products } = this.state;
 
+    //funcion auxiliar del map para calcular el subtotal de cada producto, devuelve un objeto product
     function updateSubtotal(product) {
       const counter = counters.find((element) => product.id === element.id);
-      product.subtotal = counter.value * product.price;
-
+      //si counter es undefined significa que el producto se borro, entonces devuelvo un undefined para poder filtrarlo despues del map
+      //si counter existe, tengo que calcular el subtotal, que es igual a counter.value(cantidad) * precio(price)
+      if (counter) {
+        product.subtotal = counter.value * product.price;
+      } else {
+        product = undefined;
+      }
       return product;
     }
-    const newProducts = products.map(updateSubtotal);
-    this.setState({ products: newProducts });
+
+    //array de productos con los subtotales actualizados. Filtro los productos borrados(lo que setee como undefined)
+    const newProducts = products
+      .map(updateSubtotal)
+      .filter((product) => product !== undefined);
+
+      //suma todos los subtotales, el valor inicial del acumulador lo seteo en 0
+    const sumSubtotals = newProducts.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.subtotal,
+      0
+    );
+
+    this.setState({ products: newProducts, total: sumSubtotals });
   }
 
+  //inicializa los productos con sus subtotales
   componentDidMount() {
     this.updateProducts();
   }
 
+  //cuando se actualiza counters hay que recalcular los subtotales
   componentDidUpdate(prevProps) {
     if (prevProps.counters !== this.props.counters) {
       this.updateProducts();
