@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style.css";
 
 class Counter extends Component {
   //si el contador tiene un valor diferente al anterior, lo actualiza
@@ -25,7 +26,7 @@ class Counter extends Component {
     const { onIncrement, onDelete, counter } = this.props;
 
     return (
-      <div>
+      <div className="counter">
         <span className={this.getBadgesClasses()}>{this.formatCount()}</span>
         <button
           onClick={() => onIncrement(counter)}

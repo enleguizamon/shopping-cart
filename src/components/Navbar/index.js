@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import cart from "../../images/cart.png";
+import "./style.css";
 
 const NavBar = ({ totalCounters, total }) => {
   return (
@@ -12,7 +13,7 @@ const NavBar = ({ totalCounters, total }) => {
           {totalCounters}
         </span>
       </a>
-      <p>Importe total de la compra: $ {total}</p>
+      <p className="total">Importe total de la compra: $ {total}</p>
     </nav>
   );
 };

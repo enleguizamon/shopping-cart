@@ -51,7 +51,7 @@ render(){
 
   //a navBar se manda totalCounters que calcula el length de counters mayores a 0 
 return (
-  <React.Fragment>
+  <div className="App">
   <NavBar totalCounters={counters.filter(c=> c.value>0).length} total={this.state.total} />
   <main className="container">
     <Products counters={counters} handleIncrement={this.handleIncrement} handleTotal={(newTotal) => this.handleTotal(newTotal)}/>
@@ -62,7 +62,7 @@ return (
     onDelete={this.handleDelete}
     />
   </main>
-  </React.Fragment>
+  </div>
 );
 }
 }

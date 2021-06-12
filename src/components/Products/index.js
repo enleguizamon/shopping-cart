@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import Table from "react-bootstrap/Table";
 
 class Products extends React.Component {
   state = {
@@ -53,14 +54,17 @@ class Products extends React.Component {
       .map(updateSubtotal)
       .filter((product) => product !== undefined);
 
-      //suma todos los subtotales, el valor inicial del acumulador lo seteo en 0
+    //suma todos los subtotales, el valor inicial del acumulador lo seteo en 0
     const sumSubtotals = newProducts.reduce(
       (accumulator, currentValue) => accumulator + currentValue.subtotal,
       0
     );
 
     //actualiza los productos y manda la suma de subtotales por callback
-    this.setState({ products: newProducts }, this.props.handleTotal(sumSubtotals));
+    this.setState(
+      { products: newProducts },
+      this.props.handleTotal(sumSubtotals)
+    );
   }
 
   //inicializa los productos con sus subtotales
@@ -75,21 +79,29 @@ class Products extends React.Component {
     }
   }
 
-  
   render() {
     const { products } = this.state;
     return (
-      <div className="productsContainer">
-        {products.map((item, key) => {
-          return (
-            <div className="productContainer" key={key}>
-              <p>{item.desc}</p>
-              <p>$ {item.price}</p>
-              <p>$ {item.subtotal}</p>
-            </div>
-          );
-        })}
-      </div>
+      <Table striped bordered hover className="table">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Precio unitario</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((item, key) => {
+            return (
+              <tr key={key}>
+                <td>{item.desc}</td>
+                <td>$ {item.price}</td>
+                <td>$ {item.subtotal}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
     );
   }
 }
