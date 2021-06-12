@@ -2,7 +2,7 @@
 import React from "react";
 import cart from "../../images/cart.png";
 
-const NavBar = ({ totalCounters }) => {
+const NavBar = ({ totalCounters, total }) => {
   return (
     <nav className="navbar navbar-light bg-light">
       <a className="navbar-brand" href="#">
@@ -12,6 +12,7 @@ const NavBar = ({ totalCounters }) => {
           {totalCounters}
         </span>
       </a>
+      <p>Importe total de la compra: $ {total}</p>
     </nav>
   );
 };

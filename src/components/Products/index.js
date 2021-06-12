@@ -28,7 +28,6 @@ class Products extends React.Component {
         subtotal: 0,
       },
     ],
-    total: 0,
   };
 
   //funcion para actualizar los subtotales y el total de productos. Se reutiliza en componentDidMount() y en componentDidUpdate()
@@ -60,7 +59,8 @@ class Products extends React.Component {
       0
     );
 
-    this.setState({ products: newProducts, total: sumSubtotals });
+    //actualiza los productos y manda la suma de subtotales por callback
+    this.setState({ products: newProducts }, this.props.handleTotal(sumSubtotals));
   }
 
   //inicializa los productos con sus subtotales
@@ -75,6 +75,7 @@ class Products extends React.Component {
     }
   }
 
+  
   render() {
     const { products } = this.state;
     return (
@@ -92,4 +93,5 @@ class Products extends React.Component {
     );
   }
 }
+
 export default Products;

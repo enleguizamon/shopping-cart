@@ -12,6 +12,7 @@ class App extends React.Component {
         { id: 3, value: 0 },
         { id: 4, value: 0 },
       ],
+      total: 0
     };
 
     //suma 1 a cada contador
@@ -40,15 +41,20 @@ class App extends React.Component {
       this.setState({ counters });
     };
 
+    //actualiza el tota para mandarlo a navBar
+    handleTotal(newTotal) {
+      this.setState({total: newTotal})
+    }
+
 render(){
   const { counters } = this.state;
 
   //a navBar se manda totalCounters que calcula el length de counters mayores a 0 
 return (
   <React.Fragment>
-  <NavBar totalCounters={counters.filter(c=> c.value>0).length} />
+  <NavBar totalCounters={counters.filter(c=> c.value>0).length} total={this.state.total} />
   <main className="container">
-    <Products counters={counters} handleIncrement={this.handleIncrement}/>
+    <Products counters={counters} handleIncrement={this.handleIncrement} handleTotal={(newTotal) => this.handleTotal(newTotal)}/>
     <Counters 
     counters={counters}
     onReset={this.handleReset}
